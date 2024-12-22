@@ -23,8 +23,8 @@ from testbed.constants import (
     EnumTentacleType,
     FILENAME_TESTBED_LOCK,
 )
+from testbed.tentacle_specs import McuConfig
 from testbed.tentacles_inventory import TENTACLES_INVENTORY
-from testbed.tentacles_spec import McuConfig, TENTACLES_SPECS
 from testbed.util_firmware_specs import (
     PYTEST_OPT_BUILD_FIRMWARE,
     PYTEST_OPT_DOWNLOAD_FIRMWARE,
@@ -307,19 +307,17 @@ def pytest_sessionstart(session: pytest.Session):
         serial = query_result_tentacle.rp2_serial_number
         assert serial is not None
         try:
-            hw_version, enum_tag = TENTACLES_INVENTORY[serial]
+            tentacles_inventory = TENTACLES_INVENTORY[serial]
         except KeyError:
             logger.warning(
                 f"Tentacle with serial {serial} is not specified in TENTACLES_INVENTORY."
             )
             continue
 
-        tentacle_spec = TENTACLES_SPECS[enum_tag]
-
         tentacle = Tentacle[McuConfig, EnumTentacleType, EnumFut](
-            tentacle_serial_number=serial,
-            tentacle_spec=tentacle_spec,
-            hw_version=hw_version,
+            tentacle_serial_number=tentacles_inventory.serial,
+            tentacle_spec=tentacles_inventory.tentacle_spec,
+            hw_version=tentacles_inventory.hw_version,
         )
         tentacle.assign_connected_hub(query_result_tentacle=query_result_tentacle)
         tentacles.append(tentacle)
