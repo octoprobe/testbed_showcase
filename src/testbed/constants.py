@@ -13,6 +13,11 @@ from octoprobe.util_baseclasses import TENTACLE_TYPE_MCU
 if typing.TYPE_CHECKING:
     from octoprobe.lib_tentacle import Tentacle
 
+TAG_BUILD_VARIANTS = "build_variants"
+TAG_BOARD = "board"
+
+TESTBED_NAME = "testbed_showcase"
+
 DIRECTORY_OF_THIS_FILE = pathlib.Path(__file__).parent
 DIRECTORY_REPO = DIRECTORY_OF_THIS_FILE.parent.parent
 print(DIRECTORY_REPO / "pytest.ini")

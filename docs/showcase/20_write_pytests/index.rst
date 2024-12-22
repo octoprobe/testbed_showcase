@@ -108,7 +108,7 @@ References to to source code
   
 * Sessios setup: Build the software
 
-  .. autofunction:: testbed.util_firmware_mpbuild::build_firmwares()
+  .. autofunction:: testbed.util_firmware_mpbuild::build()
       :no-index:
 
 * Session setup: Install the firmware

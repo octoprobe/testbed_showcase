@@ -13,8 +13,8 @@ Github runner user: `githubrunner`
 
 .. code::
 
-    adduser octoprobe
-    adduser githubrunner
+    sudo adduser octoprobe
+    sudo adduser githubrunner
 
 Do not forget to config git:
 
@@ -32,17 +32,14 @@ Installation: APT
     sudo apt update \
       && sudo apt upgrade -y \
       && sudo apt install -y git uhubctl dfu-util \
-        python-is-python3 python3.12-venv \
+        python-is-python3 \
         docker.io docker-buildx
 
     sudo groupadd docker
-    sudo usermod -aG docker octoprobe
-    sudo usermod -aG docker githubrunner
+    sudo usermod -aG docker,plugdev,dialout octoprobe
+    sudo usermod -aG docker,plugdev,dialout githubrunner
 
     sudo snap install astral-uv --classic
-
-
-On Raspbian: Skip python3.12-venv
 
 
 git clone testbed_showcase
@@ -57,22 +54,21 @@ python
 
 .. code::
 
-    uv venv --python 3.13.1 --prompt=testenv_showcase ~/testenv_showcase/venv
+    uv python install 3.13.1
 
-    source ~/testenv_showcase/venv/bin/activate
+    uv venv --python 3.13.1 --prompt=testbed_showcase ~/testbed_showcase/venv
+
+    source ~/testbed_showcase/venv/bin/activate
     uv pip install -e ~/testbed_showcase
 
-    echo 'source ~/testenv_showcase/venv/bin/activate' >> ~/.profile
+    echo 'source ~/testbed_showcase/venv/bin/activate' >> ~/.profile
     # Log out and in again
 
-Software requiring root access
-------------------------------
+Software requiring elevated access
+----------------------------------
 
-Will be used by mpremote and others
+Will be used by usbhubctl, mpremote and various firmware programmes
 
-.. code::
-
-    sudo usermod -a -G dialout octoprobe
 
 .. code::
 
@@ -82,11 +78,21 @@ Now `op install` will instruct you to:
 
 .. code::
 
-    sudo chown root:root ~/octoprobe_downloads/binaries/aarch64/*
-    sudo chmod a+s ~/octoprobe_downloads/binaries/aarch64/*
-    echo 'PATH="$HOME/octoprobe_downloads/binaries/aarch64:$PATH"' >> ~/.profile
-    
+    echo 'PATH=$HOME/octoprobe_downloads/binaries/x86_64:$PATH' >> ~/.profile
+    sudo cp /home/maerki/work_octoprobe_octoprobe/src/octoprobe/udev/*.rules /etc/udev/rules.d
+    sudo sudo udevadm control --reload-rules
+    sudo sudo udevadm trigger
 
+These commands may help for debugging udev rules:
+
+.. code::
+
+  sudo udevadm control --log-priority=debug
+  sudo journalctl -u systemd-udevd.service -f | grep 82-octoprobe
+
+  sudo udevadm monitor -e
+  sudo udevadm control --reload-rules
+  sudo udevadm trigger --type=devices --action=change
 
 Run your first tests
 --------------------
