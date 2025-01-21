@@ -36,8 +36,8 @@ Installation: APT
         docker.io docker-buildx
 
     sudo groupadd docker
-    sudo usermod -aG docker,plugdev,dialout octoprobe
-    sudo usermod -aG docker,plugdev,dialout githubrunner
+    sudo usermod -aG docker,plugdev,dialout,systemd-journal octoprobe
+    sudo usermod -aG docker,plugdev,dialout,systemd-journal githubrunner
 
     sudo snap install astral-uv --classic
 
