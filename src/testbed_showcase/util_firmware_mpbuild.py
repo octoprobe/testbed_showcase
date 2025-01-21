@@ -3,21 +3,21 @@ import os
 import pathlib
 
 from mpbuild.board_database import Database
-from mpbuild.build_api import build_by_variant_normalized
-from octoprobe.lib_tentacle import Tentacle
 from octoprobe.util_cached_git_repo import CachedGitRepo
 from octoprobe.util_constants import TAG_BOARDS
-from octoprobe.util_dut_programmers import FirmwareBuildSpec, FirmwareSpecBase
+from octoprobe.util_firmware_spec import FirmwareBuildSpec, FirmwareSpecBase
 from octoprobe.util_micropython_boards import BoardVariant, board_variants
 
-from testbed.constants import DIRECTORY_GIT_CACHE
+from testbed_showcase.constants import DIRECTORY_GIT_CACHE
+from testbed_showcase.tentacle_spec import TentacleShowcase
 
 logger = logging.getLogger(__file__)
+
 
 _ENV_MICROPY_DIR = "MICROPY_DIR"
 
 
-class FirmwareBuilder:
+class FirmwareBuilderObsolete:
     """
     It is difficult in pytest to keep track if git has
     already been cloned and if a firmware alread
@@ -34,7 +34,7 @@ class FirmwareBuilder:
             git_spec=firmware_git_url,
             prefix="micropython_firmware_",
         )
-        self.git_repo.clone()
+        self.git_repo.clone(git_clean=False)
 
     def build(
         self,
@@ -58,7 +58,7 @@ class FirmwareBuilder:
         return firmware_build_spec
 
 
-def build(
+def build_obsolete(
     micropython_directory: pathlib.Path,
     variant: BoardVariant,
     testresults_mpbuild: pathlib.Path,
@@ -111,11 +111,11 @@ def build(
             variant="" if firmware.variant is None else firmware.variant,
         ),
         _filename=firmware.filename,
-        micropython_version_text=firmware.micropython_version_text,
+        micropython_full_version_text=firmware.micropython_version_text,
     )
 
 
-def collect_firmware_specs(tentacles: list[Tentacle]) -> list[FirmwareSpecBase]:
+def collect_firmware_specs(tentacles: list[TentacleShowcase]) -> list[FirmwareSpecBase]:
     """
     Loops over all tentacles and finds
     the board variants that have to be
@@ -130,7 +130,4 @@ def collect_firmware_specs(tentacles: list[Tentacle]) -> list[FirmwareSpecBase]:
             set_variants.add(variant)
     list_variants = sorted(set_variants, key=lambda v: v.name_normalized)
 
-    return [
-        FirmwareBuildSpec(board_variant=variant, micropython_version_text=None)
-        for variant in list_variants
-    ]
+    return [FirmwareBuildSpec(board_variant=variant) for variant in list_variants]

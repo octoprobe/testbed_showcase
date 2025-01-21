@@ -1,11 +1,11 @@
 import pytest
-from octoprobe.lib_tentacle import Tentacle
 
-from testbed.constants import EnumFut
+from testbed_showcase.constants import EnumFut
+from testbed_showcase.tentacle_spec import TentacleShowcase
 
 
 @pytest.mark.required_futs(EnumFut.FUT_MCU_ONLY)
-def test_mip(mcu: Tentacle) -> None:
+def test_mip(mcu: TentacleShowcase) -> None:
     """
     https://micropython.org/pi/v2/index.json
     https://mim.oliverrobson.tech/

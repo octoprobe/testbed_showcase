@@ -1,6 +1,6 @@
 from octoprobe.util_baseclasses import TentaclesCollector
 
-from testbed.constants import TESTBED_NAME
+from testbed_showcase.constants import TESTBED_NAME
 
 from . import tentacle_specs
 

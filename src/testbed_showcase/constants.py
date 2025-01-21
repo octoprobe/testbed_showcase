@@ -11,7 +11,8 @@ import typing
 from octoprobe.util_baseclasses import TENTACLE_TYPE_MCU
 
 if typing.TYPE_CHECKING:
-    from octoprobe.lib_tentacle import Tentacle
+    from .tentacle_spec import TentacleShowcase
+
 
 TAG_BUILD_VARIANTS = "build_variants"
 TAG_BOARD = "board"
@@ -23,7 +24,7 @@ DIRECTORY_REPO = DIRECTORY_OF_THIS_FILE.parent.parent
 print(DIRECTORY_REPO / "pytest.ini")
 assert (DIRECTORY_REPO / "pytest.ini").is_file()
 DIRECTORY_DOWNLOADS = DIRECTORY_REPO / "downloads"
-DIRECTORY_TESTRESULTS = DIRECTORY_REPO / "results"
+DIRECTORY_TESTRESULTS_DEFAULT = DIRECTORY_REPO / "results"
 DIRECTORY_GIT_CACHE = DIRECTORY_REPO / "git_cache"
 FILENAME_TESTBED_LOCK = DIRECTORY_REPO / "testbed.lock"
 
@@ -35,15 +36,15 @@ class EnumTentacleType(enum.StrEnum):
 
     def get_tentacles_for_type(
         self,
-        tentacles: list[Tentacle],
+        tentacles: list[TentacleShowcase],
         required_futs: list[EnumFut],
-    ) -> list[Tentacle]:
+    ) -> list[TentacleShowcase]:
         """
         Select all tentacles which correspond to this
         TentacleType and list[EnumFut].
         """
 
-        def has_required_futs(t: Tentacle) -> bool:
+        def has_required_futs(t: TentacleShowcase) -> bool:
             if t.tentacle_spec.tentacle_type == self:
                 for required_fut in required_futs:
                     if required_fut in t.tentacle_spec.futs:
@@ -62,4 +63,3 @@ class EnumFut(enum.StrEnum):
     FUT_UART = enum.auto()
     FUT_ONEWIRE = enum.auto()
     FUT_TIMER = enum.auto()
-    FUT_EXTMOD_HARDWARE = enum.auto()

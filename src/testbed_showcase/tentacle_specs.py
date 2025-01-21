@@ -4,7 +4,7 @@ import dataclasses
 
 from octoprobe import util_mcu_pyboard, util_mcu_rp2
 
-from testbed.constants import EnumFut, EnumTentacleType
+from testbed_showcase.constants import EnumFut, EnumTentacleType
 
 from .tentacle_spec import TentacleSpecShowcase
 
@@ -80,7 +80,6 @@ MCU_RPI_PICO = TentacleSpecShowcase(
         EnumFut.FUT_UART,
         EnumFut.FUT_ONEWIRE,
         EnumFut.FUT_TIMER,
-        EnumFut.FUT_EXTMOD_HARDWARE,
     ],
     doc=DOC_TENTACLE_RPI_PICO,
     mcu_usb_id=util_mcu_rp2.RPI_PICO_USB_ID,
@@ -89,7 +88,6 @@ MCU_RPI_PICO = TentacleSpecShowcase(
         EnumFut.FUT_MCU_ONLY: [],
         EnumFut.FUT_I2C: [2, 3, 4, 5],
         EnumFut.FUT_ONEWIRE: [2, 3, 4],
-        EnumFut.FUT_EXTMOD_HARDWARE: [2, 4],
     },
     mcu_config=McuConfig(
         trig1="GP20",
@@ -114,7 +112,6 @@ MCU_RPI_PICO2 = TentacleSpecShowcase(
         EnumFut.FUT_UART,
         EnumFut.FUT_ONEWIRE,
         EnumFut.FUT_TIMER,
-        EnumFut.FUT_EXTMOD_HARDWARE,
     ],
     doc=DOC_TENTACLE_RPI_PICO2,
     mcu_usb_id=util_mcu_rp2.RPI_PICO2_USB_ID,
@@ -123,7 +120,6 @@ MCU_RPI_PICO2 = TentacleSpecShowcase(
         EnumFut.FUT_MCU_ONLY: [],
         EnumFut.FUT_I2C: [2, 3, 4, 5],
         EnumFut.FUT_ONEWIRE: [2, 3, 4],
-        EnumFut.FUT_EXTMOD_HARDWARE: [2, 4],
     },
     mcu_config=McuConfig(
         trig1="GP20",
@@ -154,7 +150,7 @@ DEVICE_POTPOURRY = TentacleSpecShowcase(
         EnumFut.FUT_I2C: [1, 2],
         EnumFut.FUT_ONEWIRE: [5],
     },
-)  # type: ignore[var-annotated]
+)
 
 DOC_TENTACLE_DAQ_SALEAE = """
 USB Logic Analyzer 24MHz 8 Channel
@@ -169,13 +165,11 @@ DAQ_SALEAE = TentacleSpecShowcase(
         EnumFut.FUT_UART,
         EnumFut.FUT_ONEWIRE,
         EnumFut.FUT_TIMER,
-        EnumFut.FUT_EXTMOD_HARDWARE,
     ],
     doc=DOC_TENTACLE_DAQ_SALEAE,
     tags="daq=saleae_clone",
     relays_closed={
         EnumFut.FUT_I2C: [1, 2, 3, 4],
         EnumFut.FUT_ONEWIRE: [1, 2, 3, 4],
-        EnumFut.FUT_EXTMOD_HARDWARE: [1, 2, 3, 4],
     },
-)  # type: ignore[var-annotated]
+)

@@ -3,47 +3,47 @@ import logging
 import pathlib
 import shutil
 import time
+import typing
 from collections.abc import Iterator
 
 import pytest
-from octoprobe.lib_tentacle import Tentacle
-from octoprobe.lib_testbed import Testbed
 from octoprobe.octoprobe import NTestRun
-from octoprobe.util_dut_programmers import FirmwareSpecBase
+from octoprobe.util_firmware_spec import FirmwareSpecBase
 from octoprobe.util_pytest import util_logging
 from octoprobe.util_pytest.util_resultdir import ResultsDir
 from octoprobe.util_pytest.util_vscode import break_into_debugger_on_exception
+from octoprobe.util_pyudev import UdevPoller
 from octoprobe.util_testbed_lock import TestbedLock
 from pytest import fixture
+from testbed_micropython.constants import SUBDIR_MPBUILD
+from testbed_micropython.util_firmware_mpbuild_interface import ArgsFirmware
 
-import testbed.util_testbed
-from testbed.constants import (
-    DIRECTORY_TESTRESULTS,
+import testbed_showcase.util_testbed
+from testbed_showcase.constants import (
+    DIRECTORY_GIT_CACHE,
+    DIRECTORY_TESTRESULTS_DEFAULT,
     EnumFut,
     EnumTentacleType,
     FILENAME_TESTBED_LOCK,
 )
-from testbed.tentacle_specs import McuConfig
-from testbed.tentacles_inventory import TENTACLES_INVENTORY
-from testbed.util_firmware_specs import (
-    PYTEST_OPT_BUILD_FIRMWARE,
-    PYTEST_OPT_DOWNLOAD_FIRMWARE,
-    get_firmware_specs,
-)
-from testbed.util_github_micropython_org import (
+from testbed_showcase.tentacle_spec import TentacleShowcase
+from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
+from testbed_showcase.util_firmware_specs import PYTEST_OPT_FIRMWARE, get_firmware_specs
+from testbed_showcase.util_github_micropython_org import (
     DEFAULT_GIT_MICROPYTHON_TESTS,
     PYTEST_OPT_DIR_MICROPYTHON_TESTS,
     PYTEST_OPT_GIT_MICROPYTHON_TESTS,
 )
+from testbed_showcase.util_testbed import Testbed
 
 logger = logging.getLogger(__file__)
 
-# TESTBED = testbed.util_testbed.get_testbed()
 TESTBED: Testbed | None = None
 DIRECTORY_OF_THIS_FILE = pathlib.Path(__file__).parent
 
 DEFAULT_FIRMWARE_SPEC = (
-    testbed.constants.DIRECTORY_REPO / "pytest_args_firmware_RPI_PICO2_v1.24.0.json"
+    testbed_showcase.constants.DIRECTORY_REPO
+    / "pytest_args_firmware_RPI_PICO2_v1.24.0.json"
 )
 
 
@@ -90,7 +90,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         assert EnumFut(fut), fut
 
     if "mcu" in metafunc.fixturenames:
-        list_tentacles: list[Tentacle] = []
+        list_tentacles: list[TentacleShowcase] = []
         for firmware_spec in get_firmware_specs(
             config=metafunc.config,
             tentacles=TESTBED.tentacles,
@@ -106,11 +106,12 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
                 msg = f"No tentacle where selected for testing firmware '{firmware_spec.board_variant}'. Required futs: {futs_text}"
                 logger.warning(msg)
             for tentacle in tentacles:
+                # TODO: This might be not required anymore!!!
                 # Need to create a copy to the tentacle as we
                 # modify it for the test.
                 _tentacle = copy.copy(tentacle)
-                _tentacle.firmware_spec = firmware_spec
-                list_tentacles.append(_tentacle)
+                _tentacle.tentacle_state.firmware_spec = firmware_spec
+                list_tentacles.append(tentacle)
 
         if len(list_tentacles) == 0:
             msg = f"No tentacle where selected for testing firmware '{firmware_spec.board_variant}'."
@@ -165,24 +166,42 @@ def required_futs(request: pytest.FixtureRequest) -> list[EnumFut]:
 
 
 @pytest.fixture
-def active_tentacles(request: pytest.FixtureRequest) -> list[Tentacle]:
+def active_tentacles(request: pytest.FixtureRequest) -> list[TentacleShowcase]:
     """
     Returns all active tentacles which are required
     by the test function referencing this fixture.
     """
 
-    def inner() -> Iterator[Tentacle]:
+    def inner() -> Iterator[TentacleShowcase]:
         if not hasattr(request.node, "callspec"):
             return
         for _param_name, param_value in request.node.callspec.params.items():
-            if isinstance(param_value, Tentacle):
+            if isinstance(param_value, TentacleShowcase):
                 yield param_value
 
     return list(inner())
 
 
+class NTestRunShowcase(NTestRun):
+    def __init__(
+        self,
+        connected_tentacles: typing.Sequence[TentacleShowcase],
+        args_firmware: ArgsFirmware,
+    ) -> None:
+        assert isinstance(args_firmware, ArgsFirmware)
+        super().__init__(connected_tentacles=connected_tentacles)
+        self.args_firmware = args_firmware
+        self.udev_poller = UdevPoller()
+
+    @typing.override
+    def session_teardown(self) -> None:
+        self.udev_poller.close()
+
+
+# TODO: Rename 'session_setup' -> session_context
+# TODO: NTestRunShowcase -> SessionCtx
 @fixture(scope="session", autouse=True)
-def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRun]:
+def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
     """
     Setup and teardown octoprobe and all connected tentacles.
 
@@ -191,8 +210,25 @@ def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRun]:
     """
     assert TESTBED is not None
 
-    firmware_git_url = request.config.getoption(PYTEST_OPT_BUILD_FIRMWARE)
-    _testrun = NTestRun(testbed=TESTBED, firmware_git_url=firmware_git_url)
+    # TODO: See also: get_firmware_specs()
+    # Support: Noflash
+    # Support: xy.json
+    # Support: git://
+    # Support: local directory
+    firmware_git_url = request.config.getoption(PYTEST_OPT_FIRMWARE)
+    args_firmware = ArgsFirmware(
+        firmware_build=firmware_git_url,
+        flash_skip=False,
+        flash_force=False,
+        git_clean=False,
+        directory_git_cache=DIRECTORY_GIT_CACHE,
+    )
+    args_firmware.setup()
+
+    _testrun = NTestRunShowcase(
+        connected_tentacles=TESTBED.tentacles,
+        args_firmware=args_firmware,
+    )
 
     # _testrun.session_powercycle_tentacles()
 
@@ -203,9 +239,11 @@ def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRun]:
 
 @fixture(scope="function", autouse=True)
 def setup_tentacles(
-    session_setup: NTestRun,  # pylint: disable=W0621:redefined-outer-name
+    session_setup: NTestRunShowcase,  # pylint: disable=W0621:redefined-outer-name
     required_futs: tuple[EnumFut],  # pylint: disable=W0621:redefined-outer-name
-    active_tentacles: list[Tentacle],  # pylint: disable=W0621:redefined-outer-name
+    active_tentacles: list[
+        TentacleShowcase
+    ],  # pylint: disable=W0621:redefined-outer-name
     testresults_directory: ResultsDir,  # pylint: disable=W0621:redefined-outer-name
 ) -> Iterator[None]:
     """
@@ -244,13 +282,23 @@ def setup_tentacles(
             logger.info(
                 f"TEST SETUP {duration_text(0.0)} {testresults_directory.test_nodeid}"
             )
-            session_setup.function_build_firmwares(
-                active_tentacles=active_tentacles,
-                testresults_mpbuild=testresults_directory.directory_top / "mpbuild",
-            )
-            session_setup.function_prepare_dut()
-            session_setup.function_setup_infra()
-            session_setup.function_setup_dut(active_tentacles=active_tentacles)
+            mpbuild_artifacts = testresults_directory.directory_top / SUBDIR_MPBUILD
+            mpbuild_artifacts.mkdir(parents=True, exist_ok=True)
+            for tentacle in active_tentacles:
+                session_setup.args_firmware.build_firmware(
+                    tentacle=tentacle,
+                    mpbuild_artifacts=mpbuild_artifacts,
+                )
+                session_setup.function_prepare_dut(tentacle=tentacle)
+                session_setup.function_setup_infra(
+                    udev_poller=session_setup.udev_poller,
+                    tentacle=tentacle,
+                )
+                session_setup.function_setup_dut_flash(
+                    udev_poller=session_setup.udev_poller,
+                    tentacle=tentacle,
+                    directory_logs=mpbuild_artifacts,
+                )
 
             session_setup.setup_relays(futs=required_futs, tentacles=active_tentacles)
             logger.info(
@@ -281,7 +329,7 @@ def testresults_directory(request: pytest.FixtureRequest) -> ResultsDir:
     Returns the log directory for the test function referencing this fixture.
     """
     return ResultsDir(
-        directory_top=DIRECTORY_TESTRESULTS,
+        directory_top=DIRECTORY_TESTRESULTS_DEFAULT,
         test_name=request.node.name,
         test_nodeid=request.node.nodeid,
     )
@@ -294,17 +342,17 @@ def pytest_sessionstart(session: pytest.Session):
     """
     _TESTBED_LOCK.acquire(FILENAME_TESTBED_LOCK)
 
-    if DIRECTORY_TESTRESULTS.exists():
-        shutil.rmtree(DIRECTORY_TESTRESULTS, ignore_errors=False)
-    DIRECTORY_TESTRESULTS.mkdir(parents=True, exist_ok=True)
+    if DIRECTORY_TESTRESULTS_DEFAULT.exists():
+        shutil.rmtree(DIRECTORY_TESTRESULTS_DEFAULT, ignore_errors=False)
+    DIRECTORY_TESTRESULTS_DEFAULT.mkdir(parents=True, exist_ok=True)
 
     util_logging.init_logging()
-    util_logging.Logs(DIRECTORY_TESTRESULTS)
+    util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
 
-    query_result_tentacles = NTestRun.session_powercycle_tentacles()
-    tentacles: list[Tentacle] = []
-    for query_result_tentacle in query_result_tentacles:
-        serial = query_result_tentacle.rp2_serial_number
+    usb_tentacles = NTestRun.session_powercycle_tentacles()
+    tentacles: list[TentacleShowcase] = []
+    for usb_tentacle in usb_tentacles:
+        serial = usb_tentacle.serial
         assert serial is not None
         try:
             tentacles_inventory = TENTACLES_INVENTORY[serial]
@@ -314,12 +362,12 @@ def pytest_sessionstart(session: pytest.Session):
             )
             continue
 
-        tentacle = Tentacle[McuConfig, EnumTentacleType, EnumFut](
+        tentacle = TentacleShowcase(
             tentacle_serial_number=tentacles_inventory.serial,
-            tentacle_spec=tentacles_inventory.tentacle_spec,
+            tentacle_spec_base=tentacles_inventory.tentacle_spec,
             hw_version=tentacles_inventory.hw_version,
+            usb_tentacle=usb_tentacle,
         )
-        tentacle.assign_connected_hub(query_result_tentacle=query_result_tentacle)
         tentacles.append(tentacle)
 
     if len(tentacles) == 0:
@@ -344,16 +392,10 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     When calling :code:`pytest --help`, below arguments will be listed!
     """
     parser.addoption(
-        PYTEST_OPT_DOWNLOAD_FIRMWARE,
+        PYTEST_OPT_FIRMWARE,
         action="store",
         default=None,
-        help="A json file specifying the firmware",
-    )
-    parser.addoption(
-        PYTEST_OPT_BUILD_FIRMWARE,
-        action="store",
-        default=None,
-        help=f"The url to a git repo to be cloned and compiled. Syntax: {DEFAULT_GIT_MICROPYTHON_TESTS}",
+        help=f"The url to a git repo to be cloned and compiled, a path to a source directory. Or a json file with a download location. Syntax: {DEFAULT_GIT_MICROPYTHON_TESTS}.",
     )
     parser.addoption(
         PYTEST_OPT_GIT_MICROPYTHON_TESTS,

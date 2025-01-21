@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from octoprobe.util_tentacle_label import label_renderer
 
-from testbed.constants import DIRECTORY_DOWNLOADS
-from testbed.tentacles_inventory import TENTACLES_INVENTORY
+from testbed_showcase.constants import DIRECTORY_DOWNLOADS
+from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
 
 
 def main() -> None:

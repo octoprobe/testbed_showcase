@@ -1,17 +1,17 @@
 import pytest
 from octoprobe.lib_mpremote import ExceptionCmdFailed
-from octoprobe.lib_tentacle import Tentacle
 
-from testbed.constants import EnumFut
+from testbed_showcase.constants import EnumFut
+from testbed_showcase.tentacle_spec import TentacleShowcase
 
 # pylint: disable=W0613:unused-argument
 
 
 @pytest.mark.required_futs(EnumFut.FUT_I2C)
 def test_i2c_pattern(
-    mcu: Tentacle,
-    device_potpourry: Tentacle,
-    daq_saleae: Tentacle,
+    mcu: TentacleShowcase,
+    device_potpourry: TentacleShowcase,
+    daq_saleae: TentacleShowcase,
 ) -> None:
     """
     This tests creates pulses:
@@ -62,9 +62,9 @@ run_timer('{{mcu_config.trig1}}', tim8, 2, 10)
 
 @pytest.mark.required_futs(EnumFut.FUT_I2C)
 def test_i2c(
-    mcu: Tentacle,
-    device_potpourry: Tentacle,
-    daq_saleae: Tentacle,
+    mcu: TentacleShowcase,
+    device_potpourry: TentacleShowcase,
+    daq_saleae: TentacleShowcase,
 ) -> None:
     assert mcu.is_mcu
     mcu_config = mcu.tentacle_spec.mcu_config
@@ -89,9 +89,9 @@ pin_trigger_1.value(0)
 
 @pytest.mark.required_futs(EnumFut.FUT_ONEWIRE)
 def test_onewire(
-    mcu: Tentacle,
-    device_potpourry: Tentacle,
-    daq_saleae: Tentacle,
+    mcu: TentacleShowcase,
+    device_potpourry: TentacleShowcase,
+    daq_saleae: TentacleShowcase,
 ) -> None:
     assert mcu.is_mcu
 
