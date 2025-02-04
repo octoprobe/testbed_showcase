@@ -14,7 +14,7 @@ See also: :doc:`/introduction/30_flightlevel_pytest`
 
 Source code of the firmware download:
 
-.. autoproperty:: octoprobe.util_dut_programmers::FirmwareDownloadSpec.filename()
+.. autoproperty:: octoprobe.util_firmware_spec::FirmwareDownloadSpec.filename()
     :no-index:
 
 Build firmware under Test
@@ -26,10 +26,10 @@ During the pytest session setup, the git repo will be cloned and the built.
 
 Source code of the git clone:
 
-.. autoclass:: testbed.util_firmware_mpbuild::CachedGitRepo()
+.. autoclass:: testbed_micropython.util_firmware_mpbuild::CachedGitRepo()
     :no-index:
 
 Source code of the build
 
-.. automethod:: testbed.util_firmware_mpbuild::build_firmware()
+.. automethod:: testbed_micropython.util_firmware_mpbuild::FirmwareBuilder.build()
     :no-index:

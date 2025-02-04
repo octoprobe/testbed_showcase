@@ -14,7 +14,7 @@ from .tentacle_spec import TentacleShowcase
 logger = logging.getLogger(__file__)
 PYTEST_OPT_FIRMWARE = "--firmware"
 PYTEST_OPT_BUILD_MOCK = "MOCK"
-
+DEFAULT_PYTEST_OPT_FIRMWARE = "https://github.com/micropython/micropython.git@master"
 
 # TODO: Is this function obsolete?
 def get_firmware_specs(

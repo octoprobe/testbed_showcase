@@ -12,15 +12,15 @@ Reference a function. Do only describe some parameters:
 
 Reference to a class
 
-.. autoclass:: testbed.util_firmware_mpbuild::CachedGitRepo()
+.. autoclass:: testbed_micropython.util_firmware_mpbuild::CachedGitRepo()
     :no-index:
 
 Reference to a method
 
-.. automethod:: testbed.util_firmware_mpbuild::build_firmware()
+.. automethod:: testbed_micropython.util_firmware_mpbuild::FirmwareBuilder.build()
     :no-index:
 
 Reference to a property
 
-.. autoproperty:: octoprobe.util_dut_programmers::FirmwareDownloadSpec.filename()
+.. autoproperty:: octoprobe.util_dut_programmer_abc::DutProgrammerABC.enter_boot_mode()
     :no-index:

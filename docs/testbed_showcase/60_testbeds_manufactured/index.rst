@@ -8,7 +8,7 @@ Testsbeds produced
 Tentacles inventory
 -------------------
 
-.. literalinclude:: ../../../src/testbed/tentacles_inventory.py
+.. literalinclude:: ../../../src/testbed_showcase/tentacles_inventory.py
    :language: python
    :linenos:
 

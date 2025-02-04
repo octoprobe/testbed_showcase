@@ -8,7 +8,9 @@ from octoprobe.util_baseclasses import TentacleSpecBase
 from octoprobe.util_constants import TAG_MCU
 
 from .constants import TAG_BOARD, TAG_BUILD_VARIANTS
-from .tentacle_specs import McuConfig
+
+if typing.TYPE_CHECKING:
+    from .tentacle_specs import McuConfig
 
 
 @dataclasses.dataclass(frozen=True, repr=True, eq=True, order=True)

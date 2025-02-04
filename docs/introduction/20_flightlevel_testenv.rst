@@ -11,14 +11,14 @@ Flightlevel: testbed
 
 Tests always run against a specific `testbed`. See: :doc:`/testbed_showcase/index`.
 
-This secion is about specifying such a testbed.
+This secion is about specifying such a testbed_showcase.
 
 Specification of the testbed
 ---------------------------------------------------------------
 
 .. rubric:: Supported **FUTS**
 
-File: src/testbed/constants.py
+File: src/testbed_showcase/constants.py
 
 .. code-block:: python
    :linenos:
@@ -32,7 +32,7 @@ File: src/testbed/constants.py
 
 .. rubric::  Tentacle Types
 
-File: src/testbed/constants.py
+File: src/testbed_showcase/constants.py
 
 .. code-block:: python
    :linenos:
@@ -46,7 +46,7 @@ File: src/testbed/constants.py
 Configure the tentacles
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-File: src/testbed/tentacles_spec.py
+File: src/testbed_showcase/tentacles_spec.py
 
 .. code-block:: python
    :linenos:
@@ -62,7 +62,7 @@ File: src/testbed/tentacles_spec.py
 
 The micropython code running on the MCUs differs from device to device - for example which GPIO to be used. See the use of this class in :doc:`40_flightlevel_micropython`.
 
-File: src/testbed/tentacle_specs.py
+File: src/testbed_showcase/tentacle_specs.py
 
 .. code-block:: python
    :linenos:
@@ -113,8 +113,8 @@ Configure of the testbed-instance
 
   * Testbed/Tentacle specification
 
-    * src/testbed/tentacle_spec_mcuconfig.py
-    * src/testbed/tentacles_spec.py
+    * src/testbed_showcase/tentacle_spec_mcuconfig.py
+    * src/testbed_showcase/tentacles_spec.py
 
 * A *testbed* may be instanciated (pysically assembled and soldered)
   serveral times:
@@ -125,6 +125,6 @@ Configure of the testbed-instance
 
 * Tentacles inventory
 
-.. literalinclude:: ../../src/testbed/tentacles_inventory.py
+.. literalinclude:: ../../src/testbed_showcase/tentacles_inventory.py
    :language: python
    :linenos:

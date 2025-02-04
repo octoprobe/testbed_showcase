@@ -101,22 +101,22 @@ Comments to above sequence diagram
 References to to source code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Sessios setup: pytest fixture
+* Sessions setup: pytest fixture
 
   .. autofunction:: tests.conftest::session_setup
       :no-index:
   
-* Sessios setup: Build the software
+* Sessions setup: Build the software
 
-  .. autofunction:: testbed.util_firmware_mpbuild::build()
+  .. autofunction:: testbed_micropython.util_firmware_mpbuild_interface::ArgsFirmware.build_firmware()
       :no-index:
 
 * Session setup: Install the firmware
 
-  .. automethod:: octoprobe.octoprobe::NTestRun.function_setup_dut()
+  .. automethod:: octoprobe.octoprobe::NTestRun.function_prepare_dut()
       :no-index:
 
-  .. automethod:: octoprobe.octoprobe::NTestRun.function_setup_dut()
+  .. automethod:: octoprobe.octoprobe::NTestRun.function_setup_dut_flash()
       :no-index:
 
 * Function setup: pytest fixture

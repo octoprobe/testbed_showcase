@@ -16,7 +16,7 @@ Remove all tentacles which are not invovled
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
  * Physically remove the tentacles.
- * Remove the tentacle from the configuration in `src/testbed/testbed_ch_wetzikon_1.py`.
+ * Remove the tentacle from the configuration in `src/testbed_showcase/testbed_ch_wetzikon_1.py`.
 
 Verify the relays
 ^^^^^^^^^^^^^^^^^^^

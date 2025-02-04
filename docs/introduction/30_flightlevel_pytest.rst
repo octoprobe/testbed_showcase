@@ -77,28 +77,6 @@ Arguments `--firmware-build-url`
   * install the firmware
   * run the tests
 
-Arguments `--git-micropython-tests`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-`$ pytest --git-micropython-tests=https://github.com/micropython/micropython.git@master` will
-
-* `git clone https://github.com/micropython/micropython.git`
-* `git checkout master`
-* Run `tests/run-perfbench.py`
-
-The pytest wrapper is implemented here:
-
-.. autofunction:: tests.micropython_repo.test_run::test_perf_bench()
-  :noindex:
-
-Arguments `--dir-micropython-tests`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-`$ pytest --dir-micropython-tests=~/micropython tests/micropython_repo` will
-
-* Use the `~/micropython` directory to
-* run `tests/run-perfbench.py`
 
 pytest test collection
 ---------------------------------------------------------------
@@ -180,11 +158,11 @@ This file configures pytest and contains many important hooks.
 .. autofunction:: tests.conftest::setup_tentacles()
   :no-index:
 
-testsuites
+testbeds
 ---------------------------------------------------------------
 
-There are currently 3 *testsuites*:
+There are currently 3 *testbeds*:
 
 * pytest: See `tests/test_simple.py`. These are tests purely written in pytest and serve as a best practice template.
-* mictopython testsuite. See `tests/tests_github_micropython_org/test_github_micropython_org.py`. This will just start the tests `<micropython-repo>/tests/test_perf_bench.py`. I would propose to rewrite these test using purely pytest.
 * pytest and mip: See `tests/test_mip.py`. This is a starting point for testing a *mip* or other mictopython libraries using octoprobe.
+* testbed_mictopython. Here the MicroPython interpreter is tested on the different mcus. This is implemented in https://github.com/octoprobe/testbed_micropython.

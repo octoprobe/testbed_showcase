@@ -28,11 +28,10 @@ from testbed_showcase.constants import (
 )
 from testbed_showcase.tentacle_spec import TentacleShowcase
 from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
-from testbed_showcase.util_firmware_specs import PYTEST_OPT_FIRMWARE, get_firmware_specs
-from testbed_showcase.util_github_micropython_org import (
-    DEFAULT_GIT_MICROPYTHON_TESTS,
-    PYTEST_OPT_DIR_MICROPYTHON_TESTS,
-    PYTEST_OPT_GIT_MICROPYTHON_TESTS,
+from testbed_showcase.util_firmware_specs import (
+    DEFAULT_PYTEST_OPT_FIRMWARE,
+    PYTEST_OPT_FIRMWARE,
+    get_firmware_specs,
 )
 from testbed_showcase.util_testbed import Testbed
 
@@ -199,7 +198,7 @@ class NTestRunShowcase(NTestRun):
 
 
 # TODO: Rename 'session_setup' -> session_context
-# TODO: NTestRunShowcase -> SessionCtx
+# TODO: NTestRunShowcase -> CtxTestrunShowcase
 @fixture(scope="session", autouse=True)
 def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
     """
@@ -237,6 +236,7 @@ def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
     _testrun.session_teardown()
 
 
+# TODO: session_setup -> ctxtestrun_showcase
 @fixture(scope="function", autouse=True)
 def setup_tentacles(
     session_setup: NTestRunShowcase,  # pylint: disable=W0621:redefined-outer-name
@@ -395,17 +395,5 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         PYTEST_OPT_FIRMWARE,
         action="store",
         default=None,
-        help=f"The url to a git repo to be cloned and compiled, a path to a source directory. Or a json file with a download location. Syntax: {DEFAULT_GIT_MICROPYTHON_TESTS}.",
-    )
-    parser.addoption(
-        PYTEST_OPT_GIT_MICROPYTHON_TESTS,
-        action="store",
-        default=None,
-        help=f"The micropython repo to check out. Will be used for the tests. Syntax: {DEFAULT_GIT_MICROPYTHON_TESTS}",
-    )
-    parser.addoption(
-        PYTEST_OPT_DIR_MICROPYTHON_TESTS,
-        action="store",
-        default=None,
-        help="The directory name to a checked out micropython repo. Will be used for the tests. Syntax: ~/micropython tests/micropython_repo",
+        help=f"The url to a git repo to be cloned and compiled, a path to a source directory. Or a json file with a download location. Syntax: {DEFAULT_PYTEST_OPT_FIRMWARE}.",
     )
