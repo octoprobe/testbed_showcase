@@ -103,7 +103,7 @@ References to to source code
 
 * Sessions setup: pytest fixture
 
-  .. autofunction:: tests.conftest::session_setup
+  .. autofunction:: tests.conftest::ctxtestrun
       :no-index:
   
 * Sessions setup: Build the software
@@ -113,10 +113,10 @@ References to to source code
 
 * Session setup: Install the firmware
 
-  .. automethod:: octoprobe.octoprobe::NTestRun.function_prepare_dut()
+  .. automethod:: octoprobe.octoprobe::CtxTestRun.function_prepare_dut()
       :no-index:
 
-  .. automethod:: octoprobe.octoprobe::NTestRun.function_setup_dut_flash()
+  .. automethod:: octoprobe.octoprobe::CtxTestRun.function_setup_dut_flash()
       :no-index:
 
 * Function setup: pytest fixture
@@ -126,7 +126,7 @@ References to to source code
 
 * Function setup: Set the relays
 
-  .. automethod:: octoprobe.octoprobe::NTestRun.setup_relays
+  .. automethod:: octoprobe.octoprobe::CtxTestRun.setup_relays
       :no-index:
 
 

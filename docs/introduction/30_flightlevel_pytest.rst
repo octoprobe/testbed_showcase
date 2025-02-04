@@ -149,7 +149,7 @@ This file configures pytest and contains many important hooks.
 
 .. rubric:: This function will setup and tear down octoprobe
 
-.. autofunction:: tests.conftest::session_setup()
+.. autofunction:: tests.conftest::ctxtestrun()
   :no-index:
 
 

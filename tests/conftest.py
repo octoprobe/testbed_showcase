@@ -7,7 +7,7 @@ import typing
 from collections.abc import Iterator
 
 import pytest
-from octoprobe.octoprobe import NTestRun
+from octoprobe.octoprobe import CtxTestRun
 from octoprobe.util_firmware_spec import FirmwareSpecBase
 from octoprobe.util_pytest import util_logging
 from octoprobe.util_pytest.util_resultdir import ResultsDir
@@ -181,7 +181,7 @@ def active_tentacles(request: pytest.FixtureRequest) -> list[TentacleShowcase]:
     return list(inner())
 
 
-class NTestRunShowcase(NTestRun):
+class CtxTestrunShowcase(CtxTestRun):
     def __init__(
         self,
         connected_tentacles: typing.Sequence[TentacleShowcase],
@@ -197,14 +197,12 @@ class NTestRunShowcase(NTestRun):
         self.udev_poller.close()
 
 
-# TODO: Rename 'session_setup' -> session_context
-# TODO: NTestRunShowcase -> CtxTestrunShowcase
 @fixture(scope="session", autouse=True)
-def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
+def ctxtestrun(request: pytest.FixtureRequest) -> Iterator[CtxTestrunShowcase]:
     """
     Setup and teardown octoprobe and all connected tentacles.
 
-    Now we loop over all tests an return for every test a `NTestRun` structure.
+    Now we loop over all tests an return for every test a `CtxTestRun` structure.
     Using this structure, the test find there tentacles, git-repos etc.
     """
     assert TESTBED is not None
@@ -224,7 +222,7 @@ def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
     )
     args_firmware.setup()
 
-    _testrun = NTestRunShowcase(
+    _testrun = CtxTestrunShowcase(
         connected_tentacles=TESTBED.tentacles,
         args_firmware=args_firmware,
     )
@@ -236,10 +234,9 @@ def session_setup(request: pytest.FixtureRequest) -> Iterator[NTestRunShowcase]:
     _testrun.session_teardown()
 
 
-# TODO: session_setup -> ctxtestrun_showcase
 @fixture(scope="function", autouse=True)
 def setup_tentacles(
-    session_setup: NTestRunShowcase,  # pylint: disable=W0621:redefined-outer-name
+    ctxtestrun: CtxTestrunShowcase,  # pylint: disable=W0621:redefined-outer-name
     required_futs: tuple[EnumFut],  # pylint: disable=W0621:redefined-outer-name
     active_tentacles: list[
         TentacleShowcase
@@ -262,7 +259,7 @@ def setup_tentacles(
       * Resets the relays.
 
     :param testrun: The structure created by `testrun()`
-    :type testrun: NTestRun
+    :type testrun: CtxTestRun
     """
     if len(active_tentacles) == 0:
         # No tentacle has been specified: This is just a normal pytest.
@@ -285,22 +282,22 @@ def setup_tentacles(
             mpbuild_artifacts = testresults_directory.directory_top / SUBDIR_MPBUILD
             mpbuild_artifacts.mkdir(parents=True, exist_ok=True)
             for tentacle in active_tentacles:
-                session_setup.args_firmware.build_firmware(
+                ctxtestrun.args_firmware.build_firmware(
                     tentacle=tentacle,
                     mpbuild_artifacts=mpbuild_artifacts,
                 )
-                session_setup.function_prepare_dut(tentacle=tentacle)
-                session_setup.function_setup_infra(
-                    udev_poller=session_setup.udev_poller,
+                ctxtestrun.function_prepare_dut(tentacle=tentacle)
+                ctxtestrun.function_setup_infra(
+                    udev_poller=ctxtestrun.udev_poller,
                     tentacle=tentacle,
                 )
-                session_setup.function_setup_dut_flash(
-                    udev_poller=session_setup.udev_poller,
+                ctxtestrun.function_setup_dut_flash(
+                    udev_poller=ctxtestrun.udev_poller,
                     tentacle=tentacle,
                     directory_logs=mpbuild_artifacts,
                 )
 
-            session_setup.setup_relays(futs=required_futs, tentacles=active_tentacles)
+            ctxtestrun.setup_relays(futs=required_futs, tentacles=active_tentacles)
             logger.info(
                 f"TEST BEGIN {duration_text()} {testresults_directory.test_nodeid}"
             )
@@ -315,7 +312,7 @@ def setup_tentacles(
                 f"TEST TEARDOWN {duration_text()} {testresults_directory.test_nodeid}"
             )
             try:
-                session_setup.function_teardown(active_tentacles=active_tentacles)
+                ctxtestrun.function_teardown(active_tentacles=active_tentacles)
             except Exception as e:
                 logger.exception(e)
             logger.info(
@@ -349,7 +346,7 @@ def pytest_sessionstart(session: pytest.Session):
     util_logging.init_logging()
     util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
 
-    usb_tentacles = NTestRun.session_powercycle_tentacles()
+    usb_tentacles = CtxTestRun.session_powercycle_tentacles()
     tentacles: list[TentacleShowcase] = []
     for usb_tentacle in usb_tentacles:
         serial = usb_tentacle.serial
