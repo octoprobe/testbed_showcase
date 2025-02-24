@@ -56,12 +56,12 @@ python
 
     uv python install 3.13.1
 
-    uv venv --python 3.13.1 --prompt=testbed_showcase ~/testbed_showcase/venv
+    uv venv --python 3.13.1 --prompt=testbed_showcase ~/testbed_showcase/.venv
 
-    source ~/testbed_showcase/venv/bin/activate
+    source ~/testbed_showcase/.venv/bin/activate
     uv pip install -e ~/testbed_showcase
 
-    echo 'source ~/testbed_showcase/venv/bin/activate' >> ~/.profile
+    echo 'source ~/testbed_showcase/.venv/bin/activate' >> ~/.profile
     # Log out and in again
 
 Software requiring elevated access
