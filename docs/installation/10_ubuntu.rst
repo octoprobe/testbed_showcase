@@ -54,9 +54,9 @@ python
 
 .. code::
 
-    uv python install 3.13.1
+    uv python install 3.13.2
 
-    uv venv --python 3.13.1 --prompt=testbed_showcase ~/testbed_showcase/.venv
+    uv venv --python 3.13.2 --prompt=testbed_showcase ~/testbed_showcase/.venv
 
     source ~/testbed_showcase/.venv/bin/activate
     uv pip install -e ~/testbed_showcase
