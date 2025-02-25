@@ -33,7 +33,7 @@ Delivery Inspection / Function check
 .. code:: 
 
     pytest -v -s \
-          --firmware-json=pytest_args_firmware_RPI_PICO2_v1.24.0.json \
+          --firmware=pytest_args_firmware_RPI_PICO2_v1.24.0.json \
           tests/test_simple.py::test_i2c_pattern
 
 .. rubric:: Expected text output
@@ -52,7 +52,7 @@ Delivery Inspection / Function check
 .. code:: 
 
     pytest -v -s \
-          --firmware-json=pytest_args_firmware_RPI_PICO2_v1.24.0.json \
+          --firmware=pytest_args_firmware_RPI_PICO2_v1.24.0.json \
           tests/test_simple.py
 
 .. rubric:: Expected text output

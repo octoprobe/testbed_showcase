@@ -40,16 +40,10 @@ The arguments are implmented here:
 
   $ pytest --help
   ...
-  --firmware-json=FIRMWARE_JSON
-                        A json file specifying the firmware
-  --firmware-build-url=FIRMWARE_BUILD_URL
-                        The url to a git repo to be cloned and compiled. Syntax: https://github.com/micropython/micropython.git@master
-  --git-micropython-tests=GIT_MICROPYTHON_TESTS
-                        The micropython repo to check out. Will be used for the tests. Syntax: https://github.com/micropython/micropython.git@master
-  --dir-micropython-tests=DIR_MICROPYTHON_TESTS
-                        The directory name to a checked out micropython repo. Will be used for the tests. Syntax: ~/micropython tests/micropython_repo
+  --firmware=FIRMWARE   The url to a git repo to be cloned and compiled, a path to a source directory. Or a json file with a download location. Syntax:
+                        https://github.com/micropython/micropython.git@master.
 
-Arguments `--firmware-json`
+Arguments `--firmware`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../pytest_args_firmware_RPI_PICO_v1.23.0.json
@@ -57,7 +51,7 @@ Arguments `--firmware-json`
    :linenos:
 
 
-`$ pytest --firmware-json=pytest_args_firmware_RPI_PICO_v1.23.0.json` will
+`$ pytest --firmware=pytest_args_firmware_RPI_PICO_v1.23.0.json` will
 
 * download the firmware (see *url* on line 3)
 * Install this firmware an matching tentacles (see *board_variant* on line 2)

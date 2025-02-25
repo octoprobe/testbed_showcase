@@ -33,8 +33,8 @@ The setup is a bit tricky! These config parameters have to be set correctly:
 
 	"settings": {
 		"python.testing.pytestArgs": [
-			// "--firmware-json=${workspaceFolder}/pytest_args_firmware_RPI_PICO_v1.23.0.json",
-			"--firmware-json=${workspaceFolder}/pytest_args_firmware_RPI_PICO2_v1.24.0.json",
+			// "--firmware=${workspaceFolder}/pytest_args_firmware_RPI_PICO_v1.23.0.json",
+			"--firmware=${workspaceFolder}/pytest_args_firmware_RPI_PICO2_v1.24.0.json",
 			"tests"
 		],
 		"python.testing.cwd": "${workspaceFolder}",
@@ -59,7 +59,7 @@ Now lets run the exactly same command in the VSCode debugger.
 
     "configurations": [
         {
-            "name": "pytest RPI_PICO 1.23.0 - test_github_micropython_org --collect-only --firmware-json",
+            "name": "pytest RPI_PICO 1.23.0 - test_github_micropython_org --collect-only --firmware",
             "type": "debugpy",
             "request": "launch",
             "module": "pytest",
@@ -67,8 +67,7 @@ Now lets run the exactly same command in the VSCode debugger.
             "args": [
                 "--collect-only",
                 "-q",
-                "--git-micropython-tests=https://github.com/micropython/micropython.git@master",
-                "--firmware-json=${workspaceFolder}/pytest_args_firmware_RPI_PICO_v1.23.0.json",
+                "--firmware=${workspaceFolder}/pytest_args_firmware_RPI_PICO_v1.23.0.json",
                 "tests/tests_github_micropython_org/test_github_micropython_org.py"
             ],
             "console": "integratedTerminal",

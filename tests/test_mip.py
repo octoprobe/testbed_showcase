@@ -29,5 +29,5 @@ def test_mip(mcu: TentacleShowcase) -> None:
     # url = "github:python-ecosys/aiohttp
     url = "aiohttp"
     # https://micropython.org/pi/v2/index.json
-    url = "aiohttp@0.0.2"
+    url = "aiohttp@0.0.3"
     mcu.dut.mp_remote.mip_install_package(package=url)

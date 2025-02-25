@@ -54,12 +54,10 @@ python
 
 .. code::
 
-    uv python install 3.13.2
-
     uv venv --python 3.13.2 --prompt=testbed_showcase ~/testbed_showcase/.venv
 
     source ~/testbed_showcase/.venv/bin/activate
-    uv pip install -e ~/testbed_showcase
+    uv pip install --update --no-cache -e ~/testbed_showcase
 
     echo 'source ~/testbed_showcase/.venv/bin/activate' >> ~/.profile
     # Log out and in again
@@ -108,4 +106,4 @@ Start the tests
 .. code:: 
 
    cd ~/testbed_showcase
-   pytest --firmware-json=pytest_args_firmware_RPI_PICO2_v1.24.0.json tests/test_simple.py::test_i2c
+   pytest --firmware=pytest_args_firmware_RPI_PICO2_v1.24.0.json tests/test_simple.py::test_i2c

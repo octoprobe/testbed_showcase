@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "pytest",
+            "name": "pytest (no flash - test installed firmware)",
             "type": "debugpy",
             "request": "launch",
             "module": "pytest",
@@ -16,7 +16,7 @@
                 "-s",
                 "-v",
                 // "--firmware=https://github.com/dpgeorge/micropython.git@rp2-add-rp2350",
-                "tests/test_simple.py::test_i2c",
+                // "tests/test_simple.py::test_i2c",
             ],
             "console": "integratedTerminal",
             "env": {
@@ -25,7 +25,7 @@
             "justMyCode": false,
         },
         {
-            "name": "pytest --firmware=xyz.git",
+            "name": "pytest --firmware=xyz.git (clone firmware repo and compile in docker)",
             "type": "debugpy",
             "request": "launch",
             "module": "pytest",

@@ -3,8 +3,13 @@ from __future__ import annotations
 import dataclasses
 import logging
 import pathlib
+import shutil
 
-from testbed_showcase.constants import EnumTentacleType
+from octoprobe.octoprobe import CtxTestRun
+from octoprobe.util_pytest import util_logging
+
+from testbed_showcase.constants import DIRECTORY_TESTRESULTS_DEFAULT, EnumTentacleType
+from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
 
 from .tentacle_spec import TentacleShowcase
 
@@ -69,3 +74,38 @@ class Testbed:
             raise ValueError("\n".join(lines2))
 
         return list_tentacles[0]
+
+
+def get_testbed():
+    if DIRECTORY_TESTRESULTS_DEFAULT.exists():
+        shutil.rmtree(DIRECTORY_TESTRESULTS_DEFAULT, ignore_errors=False)
+    DIRECTORY_TESTRESULTS_DEFAULT.mkdir(parents=True, exist_ok=True)
+
+    util_logging.init_logging()
+    util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
+
+    usb_tentacles = CtxTestRun.session_powercycle_tentacles()
+    tentacles: list[TentacleShowcase] = []
+    for usb_tentacle in usb_tentacles:
+        serial = usb_tentacle.serial
+        assert serial is not None
+        try:
+            tentacles_inventory = TENTACLES_INVENTORY[serial]
+        except KeyError:
+            logger.warning(
+                f"Tentacle with serial {serial} is not specified in TENTACLES_INVENTORY."
+            )
+            continue
+
+        tentacle = TentacleShowcase(
+            tentacle_serial_number=tentacles_inventory.serial,
+            tentacle_spec_base=tentacles_inventory.tentacle_spec,
+            hw_version=tentacles_inventory.hw_version,
+            usb_tentacle=usb_tentacle,
+        )
+        tentacles.append(tentacle)
+
+    if len(tentacles) == 0:
+        raise ValueError("No tentacles are connected!")
+
+    return Testbed(workspace="based-on-connected-boards", tentacles=tentacles)

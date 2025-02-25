@@ -1,7 +1,6 @@
 import copy
 import logging
 import pathlib
-import shutil
 import time
 import typing
 from collections.abc import Iterator
@@ -27,13 +26,12 @@ from testbed_showcase.constants import (
     FILENAME_TESTBED_LOCK,
 )
 from testbed_showcase.tentacle_spec import TentacleShowcase
-from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
 from testbed_showcase.util_firmware_specs import (
     DEFAULT_PYTEST_OPT_FIRMWARE,
     PYTEST_OPT_FIRMWARE,
     get_firmware_specs,
 )
-from testbed_showcase.util_testbed import Testbed
+from testbed_showcase.util_testbed import Testbed, get_testbed
 
 logger = logging.getLogger(__file__)
 
@@ -89,7 +87,22 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         assert EnumFut(fut), fut
 
     if "mcu" in metafunc.fixturenames:
+
+        def warning(
+            firmware_spec: FirmwareSpecBase | None,
+            futs: list[EnumFut],
+        ) -> None:
+            msg = "No tentacle where selected"
+            if firmware_spec is not None:
+                msg += f" for testing firmware '{firmware_spec.board_variant}'"
+            msg += "."
+            if len(futs) > 0:
+                futs_text = ", ".join(f.name for f in _required_futs)
+                msg += f" Required futs: {futs_text}."
+            logger.warning(msg)
+
         list_tentacles: list[TentacleShowcase] = []
+        firmware_spec: FirmwareSpecBase = None
         for firmware_spec in get_firmware_specs(
             config=metafunc.config,
             tentacles=TESTBED.tentacles,
@@ -101,9 +114,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             )
             tentacles = list(filter(firmware_spec.match_board, tentacles))
             if len(tentacles) == 0:
-                futs_text = ", ".join(f.name for f in _required_futs)
-                msg = f"No tentacle where selected for testing firmware '{firmware_spec.board_variant}'. Required futs: {futs_text}"
-                logger.warning(msg)
+                warning(firmware_spec=firmware_spec, futs=_required_futs)
             for tentacle in tentacles:
                 # TODO: This might be not required anymore!!!
                 # Need to create a copy to the tentacle as we
@@ -113,9 +124,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
                 list_tentacles.append(tentacle)
 
         if len(list_tentacles) == 0:
-            msg = f"No tentacle where selected for testing firmware '{firmware_spec.board_variant}'."
-            # raise ValueError(msg)
-            logger.warning(msg)
+            warning(firmware_spec=firmware_spec, futs=[])
             return
         # print(f"LEN={len(list_tentacles)}")
         metafunc.parametrize("mcu", list_tentacles, ids=lambda t: t.pytest_id)
@@ -213,6 +222,7 @@ def ctxtestrun(request: pytest.FixtureRequest) -> Iterator[CtxTestrunShowcase]:
     # Support: git://
     # Support: local directory
     firmware_git_url = request.config.getoption(PYTEST_OPT_FIRMWARE)
+
     args_firmware = ArgsFirmware(
         firmware_build=firmware_git_url,
         flash_skip=False,
@@ -339,40 +349,9 @@ def pytest_sessionstart(session: pytest.Session):
     """
     _TESTBED_LOCK.acquire(FILENAME_TESTBED_LOCK)
 
-    if DIRECTORY_TESTRESULTS_DEFAULT.exists():
-        shutil.rmtree(DIRECTORY_TESTRESULTS_DEFAULT, ignore_errors=False)
-    DIRECTORY_TESTRESULTS_DEFAULT.mkdir(parents=True, exist_ok=True)
-
-    util_logging.init_logging()
-    util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
-
-    usb_tentacles = CtxTestRun.session_powercycle_tentacles()
-    tentacles: list[TentacleShowcase] = []
-    for usb_tentacle in usb_tentacles:
-        serial = usb_tentacle.serial
-        assert serial is not None
-        try:
-            tentacles_inventory = TENTACLES_INVENTORY[serial]
-        except KeyError:
-            logger.warning(
-                f"Tentacle with serial {serial} is not specified in TENTACLES_INVENTORY."
-            )
-            continue
-
-        tentacle = TentacleShowcase(
-            tentacle_serial_number=tentacles_inventory.serial,
-            tentacle_spec_base=tentacles_inventory.tentacle_spec,
-            hw_version=tentacles_inventory.hw_version,
-            usb_tentacle=usb_tentacle,
-        )
-        tentacles.append(tentacle)
-
-    if len(tentacles) == 0:
-        raise ValueError("No tentacles are connected!")
-
     global TESTBED  # pylint: disable=W0603:global-statement
     assert TESTBED is None
-    TESTBED = Testbed(workspace="based-on-connected-boards", tentacles=tentacles)
+    TESTBED = get_testbed()
 
 
 def pytest_sessionfinish(session: pytest.Session):

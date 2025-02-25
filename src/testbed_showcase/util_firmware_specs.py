@@ -4,6 +4,7 @@ import pathlib
 import pytest
 from octoprobe.util_firmware_spec import (
     FirmwareBuildSpec,
+    FirmwareDownloadSpec,
     FirmwareNoFlashingSpec,
     FirmwareSpecBase,
 )
@@ -15,6 +16,7 @@ logger = logging.getLogger(__file__)
 PYTEST_OPT_FIRMWARE = "--firmware"
 PYTEST_OPT_BUILD_MOCK = "MOCK"
 DEFAULT_PYTEST_OPT_FIRMWARE = "https://github.com/micropython/micropython.git@master"
+
 
 # TODO: Is this function obsolete?
 def get_firmware_specs(
@@ -64,7 +66,17 @@ def get_firmware_specs(
 
         from .util_firmware_mpbuild import collect_firmware_specs
 
-        return collect_firmware_specs(tentacles=tentacles)
+        firmware_specs = collect_firmware_specs(tentacles=tentacles)
+        if FirmwareDownloadSpec.is_download(firmware_git_url):
+            # We selected a firmware using '--firmware=xy.json'
+            # Filter out the matching tentacles.
+            json_spec = FirmwareDownloadSpec.factory(firmware_git_url)
+            firmware_specs = [
+                fs
+                for fs in firmware_specs
+                if fs.board_variant == json_spec.board_variant
+            ]
+        return firmware_specs
 
     #
     # Nothing was specified: We do not flash any firmware

@@ -6,7 +6,7 @@ Download firmware under Test
 
 The firmware has to be build on github or a local computer.
 
-The parameter ``pytest --firmware-json=...`` may be used to specify a url where the download may be downloaded.
+The parameter ``pytest --firmware=...`` may be used to specify a url where the download may be downloaded.
 
 Only the MCU tentacles will be tested which match the firmware.
 
@@ -20,7 +20,7 @@ Source code of the firmware download:
 Build firmware under Test
 -------------------------
 
-The parameter ``pytest --firmware-json=...`` may be used to specify a url where the download may be downloaded.
+The parameter ``pytest --firmware=...`` may be used to specify a url where the download may be downloaded.
 
 During the pytest session setup, the git repo will be cloned and the built.
 
