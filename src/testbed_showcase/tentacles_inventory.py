@@ -13,6 +13,11 @@ TENTACLES_INVENTORY = (
             ("e46340474b4e1831", "v1.1", tentacle_specs.MCU_RPI_PICO2),
             ("e46340474b4c1331", "v1.0", tentacle_specs.DAQ_SALEAE),
             ("e46340474b4c3f31", "v1.0", tentacle_specs.DEVICE_POTPOURRY),
+            (
+                "de646cc20b684f25",
+                "v1.0",
+                tentacle_specs.MCU_RPI_PICO_W,
+            ),  # Tentacle v0.4
         ],
     )
     .add_testbed_instance(

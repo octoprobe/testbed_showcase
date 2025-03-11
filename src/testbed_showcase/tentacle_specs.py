@@ -99,6 +99,11 @@ MCU_RPI_PICO = TentacleSpecShowcase(
     ),
 )
 
+MCU_RPI_PICO_W = dataclasses.replace(
+    MCU_RPI_PICO,
+    tentacle_tag="MCU_RPI_PICO_W",
+    tags="boards=RPI_PICO_W,mcu=rp2,programmer=picotool",
+)
 
 DOC_TENTACLE_RPI_PICO2 = """
 See: https://github.com/octoprobe/testbed_showcase/tree/main/docs/tentacle_MCU_RPI_PICO
