@@ -2097,7 +2097,6 @@
 	)
 	(label "SIGNAL_DATA2"
 		(at 54.61 74.93 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2108,7 +2107,6 @@
 	)
 	(label "SIGNAL_DATA1"
 		(at 54.61 69.85 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

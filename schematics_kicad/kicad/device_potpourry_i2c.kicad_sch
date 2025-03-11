@@ -13,7 +13,6 @@
 	(hierarchical_label "SCL"
 		(shape input)
 		(at 55.88 40.64 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -25,7 +24,6 @@
 	(hierarchical_label "SCA"
 		(shape input)
 		(at 55.88 46.99 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

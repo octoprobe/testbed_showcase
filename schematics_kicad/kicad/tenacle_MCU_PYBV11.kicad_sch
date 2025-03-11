@@ -1834,7 +1834,6 @@
 	)
 	(label "SIGNAL_DATA2"
 		(at 81.28 74.93 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1845,7 +1844,6 @@
 	)
 	(label "SIGNAL_DATA1"
 		(at 81.28 69.85 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1856,7 +1854,6 @@
 	)
 	(label "SIGNAL_TRIGGER1"
 		(at 81.28 59.69 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1867,7 +1864,6 @@
 	)
 	(label "SIGNAL_TRIGGER2"
 		(at 81.28 64.77 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

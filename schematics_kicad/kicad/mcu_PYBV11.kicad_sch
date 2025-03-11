@@ -13,7 +13,6 @@
 	(hierarchical_label "Y10 {slash} SDA"
 		(shape input)
 		(at 69.85 62.23 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -25,7 +24,6 @@
 	(hierarchical_label "Y2 {slash} trigger1"
 		(shape input)
 		(at 69.85 50.8 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -37,7 +35,6 @@
 	(hierarchical_label "Y9 {slash} SCL {slash} ONEWIRE"
 		(shape input)
 		(at 69.85 58.42 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -49,7 +46,6 @@
 	(hierarchical_label "Y3 {slash} trigger2"
 		(shape input)
 		(at 69.85 54.61 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -61,7 +57,6 @@
 	(hierarchical_label "BOOT0"
 		(shape input)
 		(at 69.85 73.66 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -73,7 +68,6 @@
 	(hierarchical_label "GND"
 		(shape input)
 		(at 69.85 77.47 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -85,7 +79,6 @@
 	(hierarchical_label "X3 {slash} tx"
 		(shape input)
 		(at 69.85 69.85 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -97,7 +90,6 @@
 	(hierarchical_label "X4 {slash} rx"
 		(shape input)
 		(at 69.85 66.04 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

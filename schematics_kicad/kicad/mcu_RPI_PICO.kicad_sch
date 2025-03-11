@@ -13,7 +13,6 @@
 	(hierarchical_label "GPIO1 {slash} uart 0 rx"
 		(shape input)
 		(at 82.55 91.44 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -25,7 +24,6 @@
 	(hierarchical_label "GND"
 		(shape input)
 		(at 82.55 99.06 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -37,7 +35,6 @@
 	(hierarchical_label "GP20 {slash} trigger1"
 		(shape input)
 		(at 82.55 64.77 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -49,7 +46,6 @@
 	(hierarchical_label "GP19 {slash} SCL"
 		(shape input)
 		(at 82.55 83.82 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -61,7 +57,6 @@
 	(hierarchical_label "GPIO0 {slash} uart 0 tx"
 		(shape input)
 		(at 82.55 95.25 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -73,7 +68,6 @@
 	(hierarchical_label "GP14 {slash} onewire"
 		(shape input)
 		(at 82.55 87.63 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -82,10 +76,42 @@
 		)
 		(uuid "5b54f01c-d3ad-489b-b65b-e5a8e319f019")
 	)
+	(hierarchical_label "GPIO4 {slash} uart 1 tx"
+		(shape input)
+		(at 82.55 57.15 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "691b9e55-07b7-4e1e-bc66-57d80ce73686")
+	)
+	(hierarchical_label "3V3 (OUT)"
+		(shape input)
+		(at 82.55 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "85cf7f51-bcfb-4268-9648-7e935299bf29")
+	)
+	(hierarchical_label "SWDIO"
+		(shape input)
+		(at 82.55 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "95c00dfa-7e32-45df-ba7b-a89eff6a07bf")
+	)
 	(hierarchical_label "GP18 {slash} SDA"
 		(shape input)
 		(at 82.55 80.01 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -97,7 +123,6 @@
 	(hierarchical_label "GP17 {slash} RX"
 		(shape input)
 		(at 82.55 76.2 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -106,10 +131,31 @@
 		)
 		(uuid "9da07429-e842-44c7-959f-0f9c56ebf76d")
 	)
-	(hierarchical_label "BOOTSEL"
+	(hierarchical_label "SWCLK"
+		(shape input)
+		(at 82.55 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "aed7c310-5dd3-417a-b939-425f03ff5cb5")
+	)
+	(hierarchical_label "GPIO5 {slash} uart 1 rx"
 		(shape input)
 		(at 82.55 60.96 0)
-		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "afe84ef5-0a67-40cc-851a-d0ac05ebfc6b")
+	)
+	(hierarchical_label "BOOTSEL {slash} TP6"
+		(shape input)
+		(at 82.55 53.34 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -121,7 +167,6 @@
 	(hierarchical_label "GP21 {slash} trigger2"
 		(shape input)
 		(at 82.55 68.58 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -133,7 +178,6 @@
 	(hierarchical_label "GP16 {slash} TX"
 		(shape input)
 		(at 82.55 72.39 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

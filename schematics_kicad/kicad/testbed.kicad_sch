@@ -12,7 +12,7 @@
 	)
 	(lib_symbols)
 	(sheet
-		(at 36.83 82.55)
+		(at 38.1 82.55)
 		(size 67.31 7.62)
 		(fields_autoplaced yes)
 		(stroke
@@ -24,7 +24,7 @@
 		)
 		(uuid "2c4ba952-55c5-4e16-806b-8dc205881760")
 		(property "Sheetname" "tentacle_DAQ_saleae"
-			(at 36.83 81.8384 0)
+			(at 38.1 81.8384 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -33,7 +33,7 @@
 			)
 		)
 		(property "Sheetfile" "tentacle_daq_saleae.kicad_sch"
-			(at 36.83 90.7546 0)
+			(at 38.1 90.7546 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -45,6 +45,44 @@
 			(project "testbed"
 				(path "/188054c4-74b7-429a-b3f5-c6f3151e27de"
 					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 38.1 130.81)
+		(size 67.31 7.62)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "4a6bdfff-7e53-47df-8633-7ba3bc2f33a9")
+		(property "Sheetname" "tentacle_MCU_RPI_PICOW_v04"
+			(at 38.1 130.0984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "tenacle_MCU_RPI_PICOW_v40.kicad_sch"
+			(at 38.1 139.0146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "testbed"
+				(path "/188054c4-74b7-429a-b3f5-c6f3151e27de"
+					(page "17")
 				)
 			)
 		)
@@ -88,7 +126,7 @@
 		)
 	)
 	(sheet
-		(at 36.83 49.53)
+		(at 38.1 49.53)
 		(size 66.04 8.89)
 		(fields_autoplaced yes)
 		(stroke
@@ -100,7 +138,7 @@
 		)
 		(uuid "a196d1ad-2a7e-47a3-8a53-65ea8ad08c90")
 		(property "Sheetname" "tentacle_MCU_PYBV11"
-			(at 36.83 48.8184 0)
+			(at 38.1 48.8184 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -109,7 +147,7 @@
 			)
 		)
 		(property "Sheetfile" "tenacle_MCU_PYBV11.kicad_sch"
-			(at 36.83 59.0046 0)
+			(at 38.1 59.0046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -126,7 +164,7 @@
 		)
 	)
 	(sheet
-		(at 36.83 114.3)
+		(at 38.1 114.3)
 		(size 67.31 7.62)
 		(fields_autoplaced yes)
 		(stroke
@@ -138,7 +176,7 @@
 		)
 		(uuid "b34c041d-52f1-4fd0-ba12-b4a7db9d208c")
 		(property "Sheetname" "tentacle_MCU_LOLIN_D1_MINI"
-			(at 36.83 113.5884 0)
+			(at 38.1 113.5884 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -147,7 +185,7 @@
 			)
 		)
 		(property "Sheetfile" "tenacle_MCU_LOLIN_D1_MINI.kicad_sch"
-			(at 36.83 122.5046 0)
+			(at 38.1 122.5046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -164,7 +202,7 @@
 		)
 	)
 	(sheet
-		(at 36.83 67.31)
+		(at 38.1 67.31)
 		(size 67.31 7.62)
 		(fields_autoplaced yes)
 		(stroke
@@ -176,7 +214,7 @@
 		)
 		(uuid "b7d8ead7-fd61-4ff1-b415-403502d5b75c")
 		(property "Sheetname" "tentacle_DEVICE_potpourry"
-			(at 36.83 66.5984 0)
+			(at 38.1 66.5984 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -185,7 +223,7 @@
 			)
 		)
 		(property "Sheetfile" "device_potpourry.kicad_sch"
-			(at 36.83 75.5146 0)
+			(at 38.1 75.5146 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -202,7 +240,7 @@
 		)
 	)
 	(sheet
-		(at 36.83 97.79)
+		(at 38.1 97.79)
 		(size 67.31 7.62)
 		(fields_autoplaced yes)
 		(stroke
@@ -214,7 +252,7 @@
 		)
 		(uuid "f8b01abc-94f6-4bb9-a276-aefe3964698f")
 		(property "Sheetname" "tentacle_MCU_LOLIN_C3_MINI"
-			(at 36.83 97.0784 0)
+			(at 38.1 97.0784 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -223,7 +261,7 @@
 			)
 		)
 		(property "Sheetfile" "tenacle_MCU_LOLIN_C3_MINI.kicad_sch"
-			(at 36.83 105.9946 0)
+			(at 38.1 105.9946 0)
 			(effects
 				(font
 					(size 1.27 1.27)

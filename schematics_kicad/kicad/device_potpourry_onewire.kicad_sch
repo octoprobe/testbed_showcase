@@ -13,7 +13,6 @@
 	(hierarchical_label "data"
 		(shape input)
 		(at 43.18 40.64 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
