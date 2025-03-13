@@ -14,7 +14,7 @@ TENTACLES_INVENTORY = (
             ("e46340474b4c1331", "v1.0", tentacle_specs.DAQ_SALEAE),
             ("e46340474b4c3f31", "v1.0", tentacle_specs.DEVICE_POTPOURRY),
             (
-                "de646cc20b684f25",
+                "de646cc20b925425",
                 "v1.0",
                 tentacle_specs.MCU_RPI_PICO_W,
             ),  # Tentacle v0.4

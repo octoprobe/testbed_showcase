@@ -7,7 +7,7 @@ from collections.abc import Iterator
 
 import pytest
 from octoprobe.octoprobe import CtxTestRun
-from octoprobe.util_firmware_spec import FirmwareSpecBase
+from octoprobe.util_firmware_spec import FirmwareNoFlashingSpec, FirmwareSpecBase
 from octoprobe.util_pytest import util_logging
 from octoprobe.util_pytest.util_resultdir import ResultsDir
 from octoprobe.util_pytest.util_vscode import break_into_debugger_on_exception
@@ -92,7 +92,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             firmware_spec: FirmwareSpecBase | None,
             futs: list[EnumFut],
         ) -> None:
-            msg = "No tentacle where selected"
+            msg = "No tentacles where selected"
             if firmware_spec is not None:
                 msg += f" for testing firmware '{firmware_spec.board_variant}'"
             msg += "."
@@ -102,7 +102,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             logger.warning(msg)
 
         list_tentacles: list[TentacleShowcase] = []
-        firmware_spec: FirmwareSpecBase = None
+        firmware_spec: FirmwareSpecBase = FirmwareNoFlashingSpec.factory()
         for firmware_spec in get_firmware_specs(
             config=metafunc.config,
             tentacles=TESTBED.tentacles,
