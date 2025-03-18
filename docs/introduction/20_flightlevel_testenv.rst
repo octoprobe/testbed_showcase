@@ -79,7 +79,7 @@ File: src/testbed_showcase/tentacle_specs.py
       category="MicroPython Board",
       label="pico2",
       doc=DOC_TENTACLE_RPI_PICO2,
-      mcu_usb_id=util_mcu_rp2.RPI_PICO2_USB_ID,
+      mcu_usb_id=util_mcu_pico.RPI_PICO2_USB_ID,
       tags="boards=RPI_PICO2:RPI_PICO2-RISCV,mcu=rp2,programmer=picotool",
       relays_closed={
          EnumFut.FUT_MCU_ONLY: [],

@@ -6,6 +6,7 @@ import pathlib
 import shutil
 
 from octoprobe.octoprobe import CtxTestRun
+from octoprobe.usb_tentacle.usb_tentacle import is_serialdelimtied_valid
 from octoprobe.util_pytest import util_logging
 
 from testbed_showcase.constants import DIRECTORY_TESTRESULTS_DEFAULT, EnumTentacleType
@@ -87,13 +88,14 @@ def get_testbed():
     usb_tentacles = CtxTestRun.session_powercycle_tentacles()
     tentacles: list[TentacleShowcase] = []
     for usb_tentacle in usb_tentacles:
-        serial = usb_tentacle.serial
-        assert serial is not None
+        serial_delimited = usb_tentacle.serial_delimited
+        assert serial_delimited is not None
+        is_serialdelimtied_valid(serial_delimited=serial_delimited)
         try:
-            tentacles_inventory = TENTACLES_INVENTORY[serial]
+            tentacles_inventory = TENTACLES_INVENTORY[serial_delimited]
         except KeyError:
             logger.warning(
-                f"Tentacle with serial {serial} is not specified in TENTACLES_INVENTORY."
+                f"Tentacle with serial {serial_delimited} is not specified in TENTACLES_INVENTORY."
             )
             continue
 

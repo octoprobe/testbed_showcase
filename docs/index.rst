@@ -4,7 +4,7 @@
 Octoprobe: testbed_showcase
 ===========================
 
-.. automodule:: testbed
+.. automodule:: testbed_showcase
     :members:
 
 .. automodule:: tests

@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../work_octoprobe_octoprobe"
+		},
+		{
+			"path": "../work_octoprobe_testbed_micropython"
 		}
 	],
 	"settings": {

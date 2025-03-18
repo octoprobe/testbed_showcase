@@ -57,7 +57,7 @@ python
     uv venv --python 3.13.2 --prompt=testbed_showcase ~/testbed_showcase/.venv
 
     source ~/testbed_showcase/.venv/bin/activate
-    uv pip install --update --no-cache -e ~/testbed_showcase
+    uv pip install --upgrade --no-cache -e ~/testbed_showcase
 
     echo 'source ~/testbed_showcase/.venv/bin/activate' >> ~/.profile
     # Log out and in again

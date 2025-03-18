@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from octoprobe import util_mcu_pyboard, util_mcu_rp2
+from octoprobe import util_mcu_pico, util_mcu_pyboard
 
 from testbed_showcase.constants import EnumFut, EnumTentacleType
 
@@ -82,7 +82,7 @@ MCU_RPI_PICO = TentacleSpecShowcase(
         EnumFut.FUT_TIMER,
     ],
     doc=DOC_TENTACLE_RPI_PICO,
-    mcu_usb_id=util_mcu_rp2.RPI_PICO_USB_ID,
+    mcu_usb_id=util_mcu_pico.RPI_PICO_USB_ID,
     tags="boards=RPI_PICO,mcu=rp2,programmer=picotool",
     relays_closed={
         EnumFut.FUT_MCU_ONLY: [],
@@ -99,6 +99,11 @@ MCU_RPI_PICO = TentacleSpecShowcase(
     ),
 )
 
+MCU_RPI_PICO_W = dataclasses.replace(
+    MCU_RPI_PICO,
+    tentacle_tag="MCU_RPI_PICO_W",
+    tags="boards=RPI_PICO_W,mcu=rp2,programmer=picotool",
+)
 
 DOC_TENTACLE_RPI_PICO2 = """
 See: https://github.com/octoprobe/testbed_showcase/tree/main/docs/tentacle_MCU_RPI_PICO
@@ -114,7 +119,7 @@ MCU_RPI_PICO2 = TentacleSpecShowcase(
         EnumFut.FUT_TIMER,
     ],
     doc=DOC_TENTACLE_RPI_PICO2,
-    mcu_usb_id=util_mcu_rp2.RPI_PICO2_USB_ID,
+    mcu_usb_id=util_mcu_pico.RPI_PICO2_USB_ID,
     tags="boards=RPI_PICO2:RPI_PICO2-RISCV,mcu=rp2,programmer=picotool",
     relays_closed={
         EnumFut.FUT_MCU_ONLY: [],

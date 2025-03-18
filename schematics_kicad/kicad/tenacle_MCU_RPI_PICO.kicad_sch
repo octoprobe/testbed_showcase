@@ -1755,10 +1755,10 @@
 		)
 		(uuid "faf79316-a3b8-40d0-9881-4b81e1448864")
 	)
-	(text_box "Serial resistor allows introducing errors by overriding the signal (see tentacle_daq_saleae)"
+	(text_box "Serial resistor allows introducing errors by overriding the signal\n(see tentacle_daq_saleae)\n"
 		(exclude_from_sim no)
-		(at 154.94 36.83 0)
-		(size 20.32 15.24)
+		(at 151.13 40.64 0)
+		(size 29.21 10.16)
 		(stroke
 			(width 0)
 			(type default)
