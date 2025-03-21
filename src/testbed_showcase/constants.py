@@ -9,6 +9,7 @@ import pathlib
 import typing
 
 from octoprobe.util_baseclasses import TENTACLE_TYPE_MCU
+from octoprobe.util_constants import DIRECTORY_OCTOPROBE_GIT_CACHE
 
 if typing.TYPE_CHECKING:
     from .tentacle_spec import TentacleShowcase
@@ -25,7 +26,7 @@ print(DIRECTORY_REPO / "pytest.ini")
 assert (DIRECTORY_REPO / "pytest.ini").is_file()
 DIRECTORY_DOWNLOADS = DIRECTORY_REPO / "downloads"
 DIRECTORY_TESTRESULTS_DEFAULT = DIRECTORY_REPO / "results"
-DIRECTORY_GIT_CACHE = DIRECTORY_REPO / "git_cache"
+DIRECTORY_GIT_CACHE = DIRECTORY_OCTOPROBE_GIT_CACHE
 FILENAME_TESTBED_LOCK = DIRECTORY_REPO / "testbed.lock"
 
 
