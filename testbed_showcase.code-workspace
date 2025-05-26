@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "../work_octoprobe_octoprobe"
+			"path": "../octoprobe"
 		},
 		{
-			"path": "../work_octoprobe_testbed_micropython"
+			"path": "../testbed_micropython"
 		}
 	],
 	"settings": {

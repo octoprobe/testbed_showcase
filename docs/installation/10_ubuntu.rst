@@ -54,10 +54,12 @@ python
 
 .. code::
 
-    uv venv --python 3.13.2 --prompt=testbed_showcase ~/testbed_showcase/.venv
+    cd ~/testbed_showcase
 
-    source ~/testbed_showcase/.venv/bin/activate
-    uv pip install --upgrade --no-cache -e ~/testbed_showcase
+    uv venv --python 3.13.3
+
+    source .venv/bin/activate
+    uv pip install --upgrade -e .
 
     echo 'source ~/testbed_showcase/.venv/bin/activate' >> ~/.profile
     # Log out and in again
