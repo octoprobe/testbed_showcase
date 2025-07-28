@@ -35,11 +35,11 @@ Every testbed requires a unique name. This here is called `testbed_showcase`.
 
 
 Signals
-  See :doc:`/testbed_showcase/40_specification/10_octobus-signals`
+  See :doc:`/implementation/40_specification/10_octobus-signals`
 
 Tentacle Roles
-  See :doc:`/testbed_showcase/40_specification/20_tentacle-roles`
+  See :doc:`/implementation/40_specification/20_tentacle-roles`
 
 FUTs (*FUT*: Feature Under Test)
-  See :doc:`/testbed_showcase/40_specification/30_feature-under-test`
+  See :doc:`/implementation/40_specification/30_feature-under-test`
 

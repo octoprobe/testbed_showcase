@@ -9,7 +9,7 @@ Flightlevel: testbed
     * How a *testbed* is configured.
     * How a *testbed instance* is configured.
 
-Tests always run against a specific `testbed`. See: :doc:`/testbed_showcase/index`.
+Tests always run against a specific `testbed`. See: :doc:`/implementation/index`.
 
 This secion is about specifying such a testbed_showcase.
 
