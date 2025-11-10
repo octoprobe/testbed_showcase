@@ -92,7 +92,7 @@ def get_testbed():
         assert serial_delimited is not None
         is_serialdelimtied_valid(serial_delimited=serial_delimited)
         try:
-            tentacles_inventory = TENTACLES_INVENTORY[serial_delimited]
+            tentacle_instance = TENTACLES_INVENTORY[serial_delimited]
         except KeyError:
             logger.warning(
                 f"Tentacle with serial {serial_delimited} is not specified in TENTACLES_INVENTORY."
@@ -100,9 +100,8 @@ def get_testbed():
             continue
 
         tentacle = TentacleShowcase(
-            tentacle_serial_number=tentacles_inventory.serial,
-            tentacle_spec_base=tentacles_inventory.tentacle_spec,
-            hw_version=tentacles_inventory.hw_version,
+            tentacle_instance=tentacle_instance,
+            tentacle_serial_number=serial_delimited,
             usb_tentacle=usb_tentacle,
         )
         tentacles.append(tentacle)
