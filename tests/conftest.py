@@ -248,9 +248,7 @@ def ctxtestrun(request: pytest.FixtureRequest) -> Iterator[CtxTestrunShowcase]:
 def setup_tentacles(
     ctxtestrun: CtxTestrunShowcase,  # pylint: disable=W0621:redefined-outer-name
     required_futs: tuple[EnumFut],  # pylint: disable=W0621:redefined-outer-name
-    active_tentacles: list[
-        TentacleShowcase
-    ],  # pylint: disable=W0621:redefined-outer-name
+    active_tentacles: list[TentacleShowcase],  # pylint: disable=W0621:redefined-outer-name
     testresults_directory: ResultsDir,  # pylint: disable=W0621:redefined-outer-name
 ) -> Iterator[None]:
     """
@@ -355,6 +353,10 @@ def pytest_sessionstart(session: pytest.Session):
 
 
 def pytest_sessionfinish(session: pytest.Session):
+    global TESTBED
+    assert TESTBED is not None
+    TESTBED.close()
+
     _TESTBED_LOCK.unlink()
 
 

@@ -8,6 +8,7 @@ import shutil
 from octoprobe.octoprobe import CtxTestRun
 from octoprobe.usb_tentacle.usb_tentacle import is_serialdelimtied_valid
 from octoprobe.util_pytest import util_logging
+from octoprobe.util_pytest.util_logging import Logs
 
 from testbed_showcase.constants import DIRECTORY_TESTRESULTS_DEFAULT, EnumTentacleType
 from testbed_showcase.tentacles_inventory import TENTACLES_INVENTORY
@@ -28,11 +29,16 @@ class Testbed:
 
     workspace: str
     tentacles: list[TentacleShowcase]
+    logs: Logs
 
     def __post_init__(self) -> None:
         assert isinstance(self.tentacles, list)
+        assert isinstance(self.logs, Logs)
         for tentacle in self.tentacles:
             assert isinstance(tentacle, TentacleShowcase)
+
+    def close(self) -> None:
+        self.logs.close()
 
     @property
     def description_short(self) -> str:
@@ -83,7 +89,7 @@ def get_testbed():
     DIRECTORY_TESTRESULTS_DEFAULT.mkdir(parents=True, exist_ok=True)
 
     util_logging.init_logging()
-    util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
+    logs = util_logging.Logs(DIRECTORY_TESTRESULTS_DEFAULT)
 
     usb_tentacles = CtxTestRun.session_powercycle_tentacles()
     tentacles: list[TentacleShowcase] = []
@@ -109,4 +115,6 @@ def get_testbed():
     if len(tentacles) == 0:
         raise ValueError("No tentacles are connected!")
 
-    return Testbed(workspace="based-on-connected-boards", tentacles=tentacles)
+    return Testbed(
+        workspace="based-on-connected-boards", tentacles=tentacles, logs=logs
+    )
