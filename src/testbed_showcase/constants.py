@@ -22,8 +22,8 @@ TESTBED_NAME = "testbed_showcase"
 
 DIRECTORY_OF_THIS_FILE = pathlib.Path(__file__).parent
 DIRECTORY_REPO = DIRECTORY_OF_THIS_FILE.parent.parent
-print(DIRECTORY_REPO / "pytest.ini")
-assert (DIRECTORY_REPO / "pytest.ini").is_file()
+print(DIRECTORY_REPO / "pyproject.toml")
+assert (DIRECTORY_REPO / "pyproject.toml").is_file()
 DIRECTORY_DOWNLOADS = DIRECTORY_REPO / "downloads"
 DIRECTORY_TESTRESULTS_DEFAULT = DIRECTORY_REPO / "results"
 DIRECTORY_GIT_CACHE = DIRECTORY_OCTOPROBE_GIT_CACHE

@@ -74,7 +74,7 @@ module = "pallets_sphinx_themes.*"
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-pythonpath = "."
+pythonpath = "str"
 addopts = [
   # "-m", "not live",
   "--strict-config",
@@ -83,10 +83,13 @@ addopts = [
 ]
 markers = [
     "live: Test on real usb hubs",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "required_futs: ...",
 ]
 testpaths = "tests"
 xfail_strict = true
 junit_family = "xunit2"
+norecursedirs = ["downloads", "results", "git_cache", "mpbuild"]
 filterwarnings = [
     "error",
     # TODO: needed by asyncio in Python 3.9.7 https://bugs.python.org/issue45097, try to remove on 3.9.8
