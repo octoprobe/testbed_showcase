@@ -290,6 +290,7 @@ def setup_tentacles(
             mpbuild_artifacts = testresults_directory.directory_top / SUBDIR_MPBUILD
             mpbuild_artifacts.mkdir(parents=True, exist_ok=True)
             for tentacle in active_tentacles:
+                tentacle.infra.load_base_code_if_needed()
                 ctxtestrun.args_firmware.build_firmware(
                     tentacle=tentacle,
                     mpbuild_artifacts=mpbuild_artifacts,
