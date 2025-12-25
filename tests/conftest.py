@@ -341,7 +341,7 @@ def testresults_directory(request: pytest.FixtureRequest) -> ResultsDir:
     )
 
 
-def pytest_sessionstart(session: pytest.Session):
+def pytest_sessionstart(session: pytest.Session) -> None:
     """
     Called after the Session object has been created and
     before performing collection and entering the run test loop.
@@ -353,8 +353,7 @@ def pytest_sessionstart(session: pytest.Session):
     TESTBED = get_testbed()
 
 
-def pytest_sessionfinish(session: pytest.Session):
-    global TESTBED
+def pytest_sessionfinish(session: pytest.Session) -> None:
     assert TESTBED is not None
     TESTBED.close()
 

@@ -64,6 +64,7 @@ def get_firmware_specs(
                 ),
             ]
 
+        # pylint: disable=import-outside-toplevel
         from .util_firmware_mpbuild import collect_firmware_specs
 
         firmware_specs = collect_firmware_specs(tentacles=tentacles)
