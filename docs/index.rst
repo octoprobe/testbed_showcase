@@ -4,8 +4,7 @@ testbed_showcase
 
 .. toctree::
 
-    big_picture.rst
-    /introduction/index
-    /installation/index
-    /showcase/index
-    /implementation/index
+    introduction/index.rst
+    installation/index.rst
+    showcase/index.rst
+    implementation/index.rst
