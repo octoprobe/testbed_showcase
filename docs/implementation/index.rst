@@ -5,4 +5,4 @@ Implementation
    :glob:
    :maxdepth: 2
 
-   */**
+   **

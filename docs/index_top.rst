@@ -11,6 +11,7 @@ testbed_showcase
     :caption: Contents:
 
     top/octoprobe_tentacle
+    top/octoprobe_octohub4
     top/octoprobe_octoprobe
     top/octoprobe_testbed_micropython
     index.rst
