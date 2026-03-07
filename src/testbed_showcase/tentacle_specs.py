@@ -141,9 +141,11 @@ DOC_TENTACLE_DEVICE_POTPOURRY = """
 FT232RL
   https://www.aliexpress.com/item/1005006445462581.html
 I2C EEPROM AT24C08
-  https://www.aliexpress.com/item/1005005344566156.html
+  https://www.aliexpress.com/item/1005005344566156.html (old)
+  https://www.aliexpress.com/item/1005007083692220.html
 1Wire Temperature Sensor DS18B20 TO-92
-  https://www.aliexpress.com/item/1005004987470850.html
+  https://www.aliexpress.com/item/1005004987470850.html (old)
+  https://www.aliexpress.com/item/1005008977601125.html
 """
 DEVICE_POTPOURRY = TentacleSpecShowcase(
     tentacle_type=EnumTentacleType.TENTACLE_DEVICE_POTPOURRY,
