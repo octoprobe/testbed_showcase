@@ -1,12 +1,13 @@
 **/__pycache__/
-schematics_kicad/kicad/testbed-backups/*
+schematics_kicad/kicad/testbed-backups/
 schematics_kicad/kicad/*.bak
-docs/_build/**
-results/**
-results_*/**
-git_cache/**
-downloads/**
-venv/** */
+docs/_build/
+docs/top/
+docs/index_top.rst
+results/
+results_*/
+git_cache/
+downloads/
 *.log
 testbed.lock
 mpbuild/tests_mpbuild/results/*.txt
